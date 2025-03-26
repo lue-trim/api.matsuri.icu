@@ -18,6 +18,25 @@ function sliceArray(arr, size) {
     return arr2;
 }
 
+router.post('/db', async (req, res) => {
+    const Authorization = req.headers.authorization;
+    if (process.env.Authorization !== Authorization) {
+        res.status(403);
+        res.send({id: 0});
+        return
+    }
+    let data = req.body;
+    let exec;
+    if (data.hasOwnProperty('exec')) exec = data.exec;
+    try {
+        await db.query('$1', [exec])
+    } catch {
+        res.status(500)
+    } finally {
+        res.send({id: id});
+    }
+});
+
 router.post('/start_clip', async (req, res) => {
     const Authorization = req.headers.authorization;
     if (process.env.Authorization !== Authorization) {

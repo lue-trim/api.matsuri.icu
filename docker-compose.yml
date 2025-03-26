@@ -3,14 +3,14 @@ services:
   web:
     build: .
     ports:
-      - "3000:3000"
+      - "63154:3000"
     environment:
       - REDIS_URL=redis://redis/
       - Authorization=
       - SentryDSN=
       - PGHOST=db
       - PGUSER=matsuri_icu
-      - PGPASSWORD=
+      - PGPASSWORD=matsuri_icu
       - PGDATABASE=matsuri_icu
       - recaptcha=
     links:
@@ -21,4 +21,7 @@ services:
   db:
     image: "postgres:13-alpine"
     volumes:
-      - D:\test_pg:/var/lib/postgresql/data
+      - /home/admin/Apps/api.matsuri.icu/data:/var/lib/postgresql/data
+    environment: 
+      - POSTGRES_PASSWORD=matsuri_icu
+      - POSTGRES_HOST_AUTH_METHOD=trust
