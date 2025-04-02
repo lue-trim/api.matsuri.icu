@@ -29,11 +29,12 @@ router.post('/db', async (req, res) => {
     let exec;
     if (data.hasOwnProperty('exec')) exec = data.exec;
     try {
-        await db.query('$1', [exec])
+        data = await db.query('$1', [exec])
+        query_res = data.rows
     } catch {
         res.status(500)
     } finally {
-        res.send({id: id});
+        res.send({id: id},{data: query_res});
     }
 });
 
